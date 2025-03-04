@@ -259,7 +259,7 @@ export function RoleManager() {
       </header>
       {!isLoggedIn && (
         <div 
-          className="w-full h-[800px] bg-[url('/Moon-ACE.png')] bg-contain bg-bottom bg-no-repeat mt-auto mb-8"
+          className="w-full h-[1000px] bg-[url('/ACEs.svg')] bg-[length:1600px_auto] bg-right-bottom bg-no-repeat -mt-48"
         />
       )}
       {isLoggedIn && (
@@ -477,28 +477,68 @@ export function RoleManager() {
                                 </div>
                               </CollapsibleTrigger>
                               <CollapsibleContent className="p-3 mt-1 bg-[#1A1A40] rounded-lg space-y-2">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <div className={`grid ${platform === 'telegram' ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'} gap-3`}>
                                   {rule.chainType.slice(0, 3).map((chain, chainIndex, array) => (
-                                    <>
-                                      <div key={chainIndex} className="p-4 bg-[#2A2A50] rounded-xl space-y-3 border border-[#FFC700] h-full min-h-[150px]">
-                                        <div>
-                                          <p className="text-[#FFC700] text-sm mb-2">Chain / token type</p>
-                                          <p className="text-zinc-200 text-sm font-mono break-all">{chain.trim()}</p>
-                                        </div>
-                                        <div>
-                                          <p className="text-[#FFC700] text-sm mb-1">Min / max tokens:</p>
-                                          <p className="text-zinc-200 text-sm font-mono">
-                                            {rule.minTokens}
-                                            {rule.maxTokens === Infinity ? ' ∞' : `/ ${rule.maxTokens}`}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      {platform === 'telegram' && chainIndex < array.length - 1 && array.length > 1 && (
-                                        <div className="flex items-center justify-center">
-                                          <span className="text-[#FFC700] font-bold">AND</span>
+                                    <div key={chainIndex} className="flex flex-col gap-3">
+                                      {platform === 'telegram' ? (
+                                        chainIndex === 0 || chainIndex % 2 === 0 ? (
+                                          <div className="p-4 bg-[#2A2A50] rounded-xl space-y-3 border border-[#FFC700]">
+                                            <div className="space-y-3">
+                                              <div className="p-3 bg-[#1A1A40] rounded-lg">
+                                                <div>
+                                                  <p className="text-[#FFC700] text-sm mb-2">Chain / token type</p>
+                                                  <p className="text-zinc-200 text-sm font-mono break-all">{chain.trim()}</p>
+                                                </div>
+                                                <div className="mt-3">
+                                                  <p className="text-[#FFC700] text-sm mb-1">Min / max tokens:</p>
+                                                  <p className="text-zinc-200 text-sm font-mono">
+                                                    {rule.minTokens}
+                                                    {rule.maxTokens === Infinity ? ' ∞' : `/ ${rule.maxTokens}`}
+                                                  </p>
+                                                </div>
+                                              </div>
+                                              
+                                              {chainIndex + 1 < array.length && chainIndex % 2 === 0 && (
+                                                <>
+                                                  <div className="flex items-center justify-center my-2">
+                                                    <span className="text-[#FFC700] font-bold">AND</span>
+                                                  </div>
+                                                  <div className="p-3 bg-[#1A1A40] rounded-lg">
+                                                    <div>
+                                                      <p className="text-[#FFC700] text-sm mb-2">Chain / token type</p>
+                                                      <p className="text-zinc-200 text-sm font-mono break-all">{array[chainIndex + 1].trim()}</p>
+                                                    </div>
+                                                    <div className="mt-3">
+                                                      <p className="text-[#FFC700] text-sm mb-1">Min / max tokens:</p>
+                                                      <p className="text-zinc-200 text-sm font-mono">
+                                                        {rule.minTokens}
+                                                        {rule.maxTokens === Infinity ? ' ∞' : `/ ${rule.maxTokens}`}
+                                                      </p>
+                                                    </div>
+                                                  </div>
+                                                </>
+                                              )}
+                                            </div>
+                                          </div>
+                                        ) : null
+                                      ) : (
+                                        <div className="p-4 bg-[#2A2A50] rounded-xl space-y-3 border border-[#FFC700]">
+                                          <div className="p-3 bg-[#1A1A40] rounded-lg">
+                                            <div>
+                                              <p className="text-[#FFC700] text-sm mb-2">Chain / token type</p>
+                                              <p className="text-zinc-200 text-sm font-mono break-all">{chain.trim()}</p>
+                                            </div>
+                                            <div className="mt-3">
+                                              <p className="text-[#FFC700] text-sm mb-1">Min / max tokens:</p>
+                                              <p className="text-zinc-200 text-sm font-mono">
+                                                {rule.minTokens}
+                                                {rule.maxTokens === Infinity ? ' ∞' : `/ ${rule.maxTokens}`}
+                                              </p>
+                                            </div>
+                                          </div>
                                         </div>
                                       )}
-                                    </>
+                                    </div>
                                   ))}
                                 </div>
                               </CollapsibleContent>
